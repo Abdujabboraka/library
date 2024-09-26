@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>home</title>
+<style>
+    .book-model {
+    width: 100%;
+    height: 500px;
+    border: 2px solid #ddd;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 25px;
+    background-color: rgb(255, 239, 179);
+    line-height: 0.9;
+    }
+
+    .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 100px;}
+
+    .button {
+    background-color: rgb(205, 120, 2); /* Green */
+    color: white;
+    margin-top: 25px;
+    padding: 15px 20px;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 25px;
+    cursor: pointer;
+    border: none;
+
+
+        }
+
+   .button:hover {
+    background-color: rgb(253, 136, 1) /* Darker green */
+    }
+
+    .reder {
+    font-weight: bold;
+    font-size: 50px;
+    color: rgb(205, 110, 1);
+    }
+
+    .table {
+    width: 100%;
+    border-collapse: collapse;
+    border-color: #000000;
+    background-color:  rgb(255, 239, 179)}
+
+    .body {
+    background-color: rgb(255, 245, 207);}
+
+    .text {
+    color: rgb(205, 110, 1);}
+
+    .info {
+    color: rgb(79, 43, 2);
+    font-size: 25px;}
+
+    .box {
+    background-color: rgb(255, 210, 76);
+    padding: 20px;
+    margin: 10px;
+    border-radius: 25px;
+    }
+
+</style>
+</head>
+<body class="body">
+<h1 align="center" class="text">Weekly books store</h1>
+<div class = "container">
+{% for b in book %}
+    <div class="book-model" >
+        {% if b.photo.url %}
+
+        <img src="{{ b.photo.url }}"  height="200" align="center">
+        {% else %}
+        <img src="https://www.90collect.com/media/upload/article/neiku/IMG_9653.jpg" alt="Placeholder" height="200" align="center">
+
+        {% endif %}
+
+
+        <h2>{{ b.title }}</h2>
+        <p> <span style="font-weight: bold;">Author:</span> {{ b.author }}</p>
+        <p><span style="font-weight: bold;">Year :</span> {{ b.publication_year }}</p>
+        <p><span style="font-weight: bold;">Genre: </span> {{ b.genre }}</p>
+        <p> <span style="font-weight: bold;">Description: </span> {{ b.description|truncatewords:10 }}</p>
+
+
+        <p align="center"><button type="button" class="button"  > view more</button></p>
+
+    </div>
+
+{% endfor %}
+</div>
+<hr>
+    <p align="center" class="reder" >Readers section</p>
+
+<div class="container">
+       <table class="table" border="2" width="100%">
+           <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Address</th>
+           </tr>
+           {% for r in reader %}
+                <tr>
+                    <div class="reader-box">
+                        <td align="center" class="info"><p>{{ r.name }}</p></td>
+                        <td align="center" class="info"><p>{{ r.email }}</p></td>
+                        <td align="center" class="info"><p>{{ r.phone_number }}</p></td>
+                        <td align="center" class="info"><p>{{ r.address }}</p></td>
+                </tr>
+                    </div>
+           {% endfor %}
+       </table>
+</div>
+
+<hr>
+<p align="center" class="reder">Borrowed books</p>
+<div class="container">
+    {% for b in borrow %}
+        <div class="box">
+            <h2>{{ b.book.title }}</h2>
+            <p> <span style="font-weight: bold;">Borrowed by:</span> {{ b.reader.name }}</p>
+            <p><span style="font-weight: bold;">Borrowed at:</span> {{ b.borrow_date }}</p>
+            <p><span style="font-weight: bold;">Returned at:</span> {{ b.return_date }}</p>
+            <button type="button" class="button">return book</button>
+        </div>
+    {% endfor %}
+
+
+</div>
+</body>
+</html>
